@@ -15,6 +15,15 @@ install:
 before_script:
   - cmake --version
   - cd ..
+  # Build and install YCM
+  - git clone https://github.com/robotology/ycm.git
+  - cd ycm
+  - mkdir build
+  - cd build
+  - cmake ..
+  - make
+  - sudo make install
+  - cd ../..
   # Prepare paramHelp build
   - cd paramHelp
   - mkdir build
@@ -24,7 +33,7 @@ before_script:
 script:
   - make
   - sudo make install
-  - ctest -V
+  - sudo make uninstall
 
 notifications:
   email:
