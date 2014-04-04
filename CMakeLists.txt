@@ -67,7 +67,7 @@ install(TARGETS paramhelp
         ARCHIVE DESTINATION "${${VARS_PREFIX}_INSTALL_LIBDIR}" COMPONENT lib
         PUBLIC_HEADER DESTINATION "${${VARS_PREFIX}_INSTALL_INCLUDEDIR}/paramHelp" COMPONENT dev)
 
-set_property(GLOBAL APPEND PROPERTY ${VARS_PREFIX}_TARGETS idyntree)
+set_property(GLOBAL APPEND PROPERTY ${VARS_PREFIX}_TARGETS ${LIB_TARGET_NAME})
 
 include(InstallBasicPackageFiles)
 install_basic_package_files(paramHelp   VARS_PREFIX ${VARS_PREFIX}
