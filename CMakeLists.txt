@@ -36,7 +36,7 @@ SOURCE_GROUP("Source Files" FILES ${folder_source})
 SOURCE_GROUP("Header Files" FILES ${folder_header})
 
 if(MSVC)
-    message(STATUS "Building "${PROJECTNAME}" as a shared library is not currently supported on Windows")
+    message(STATUS "Building ${PROJECTNAME} as a shared library is not currently supported on Windows")
     set(SHARED_LIBRARY FALSE)
 endif()
 
