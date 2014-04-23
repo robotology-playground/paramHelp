@@ -99,6 +99,7 @@ class ParamProxyBasic: public ParamProxyInterface
     T                   *value;                     ///< pointer to the variable containing the value of this parameter
     bool                linkedToExternalVariable;   ///< true if the parameter has been linked to an external variable
     const T             *defaultValue;              ///< pointer to the (array of( default value of this parameter
+    ParamConstraint<T>  constraints;                ///< constraints on the values that the parameter can take
 
     void init(const T *_defaultValue)
     {
@@ -112,7 +113,7 @@ class ParamProxyBasic: public ParamProxyInterface
     }
 
 public:
-    ParamConstraint<T>  constraints;                ///< constraints on the values that the parameter can take
+    const ParamConstraint<T>* constraint;
 
     /** Constructor of an empty parameter. */
     ParamProxyBasic(): ParamProxyInterface(), linkedToExternalVariable(false){}
@@ -126,8 +127,23 @@ public:
      * @param _descr Description of the parameter (used for giving instructions to users). */
     ParamProxyBasic(const std::string &_name, int _id, ParamSize _size, const ParamConstraint<T> &_constraints, 
                     ParamIOType _ioType, const T *_defaultValue, const std::string &_descr="")
-        :ParamProxyInterface(_name, _id, _size, _ioType, _descr), constraints(_constraints)
+        :ParamProxyInterface(_name, _id, _size, _ioType, _descr), constraint(NULL), constraints(_constraints)
     {
+        init(_defaultValue);
+    }
+
+    /** Constructor of a simple parameter proxy (e.g. int, float or string).
+     * @param _name Name of the parameter.
+     * @param _id Unique id associated to the parameter.
+     * @param _constraints Constraints on the values that the parameter can take.
+     * @param _ioType Specifies whether the parameter can be read and/or written and if it is of streaming type.
+     * @param _defaultValue Pointer to the array of default values for this parameter.
+     * @param _descr Description of the parameter (used for giving instructions to users). */
+    ParamProxyBasic(const std::string &_name, int _id, ParamSize _size, const ParamConstraint<T> *_constraints,
+                    ParamIOType _ioType, const T *_defaultValue, const std::string &_descr="")
+        :ParamProxyInterface(_name, _id, _size, _ioType, _descr), constraint(_constraints)
+    {
+        if(constraint != NULL) constraints = *constraint;
         init(_defaultValue);
     }
 
@@ -139,7 +155,7 @@ public:
      * @param _descr Description of the parameter (used for giving instructions to users). */
     ParamProxyBasic(const std::string &_name, int _id, ParamSize _size, ParamIOType _ioType, 
                     const T *_defaultValue, const std::string &_descr="")
-        :ParamProxyInterface(_name, _id, _size, _ioType, _descr)
+        :ParamProxyInterface(_name, _id, _size, _ioType, _descr), constraint(NULL)
     {
         init(_defaultValue);
     }
