@@ -52,8 +52,9 @@ public:
 template<class T>
 class ParamLowerBound : public ParamConstraint<T>
 {
-    T lowerBound;        ///< value of the bound
 public:
+    T lowerBound;        ///< value of the bound
+
     ParamLowerBound(const T _lowBound): lowerBound(_lowBound) {}
     bool checkConstraint(const T v) const { return (v)>lowerBound; }
 };
@@ -64,8 +65,9 @@ public:
 template<class T>
 class ParamUpperBound : public ParamConstraint<T>
 {
-    T upperBound;        ///< value of the bound
 public:
+    T upperBound;        ///< value of the bound
+
     ParamUpperBound(const T _upBound): upperBound(_upBound) {}
     bool checkConstraint(const T v) const { return (v)<upperBound; }
 };
@@ -76,12 +78,11 @@ public:
 template<class T>
 class ParamBilatBounds : public ParamConstraint<T>
 {
-    T       lowerBound, upperBound;
 public:
+    T       lowerBound, upperBound;
+
     ParamBilatBounds(const T low, const T up): lowerBound(low), upperBound(up) {}
-    
     bool checkConstraint(const T v) const { return (v)<upperBound && (v)>lowerBound; }
-    
     std::string toString()
     { return std::string("[")+paramHelp::toString(lowerBound)+", "+paramHelp::toString(upperBound)+"]"; }
 };
@@ -98,7 +99,6 @@ class ParamProxyBasic: public ParamProxyInterface
     T                   *value;                     ///< pointer to the variable containing the value of this parameter
     bool                linkedToExternalVariable;   ///< true if the parameter has been linked to an external variable
     const T             *defaultValue;              ///< pointer to the (array of( default value of this parameter
-    ParamConstraint<T>  constraints;                ///< constraints on the values that the parameter can take
 
     void init(const T *_defaultValue)
     {
@@ -112,7 +112,8 @@ class ParamProxyBasic: public ParamProxyInterface
     }
 
 public:
-    
+    ParamConstraint<T>  constraints;                ///< constraints on the values that the parameter can take
+
     /** Constructor of an empty parameter. */
     ParamProxyBasic(): ParamProxyInterface(), linkedToExternalVariable(false){}
     
