@@ -309,9 +309,9 @@ public:
         if(size==0)
             return std::string("");
         std::stringstream ss;
-        ss<< value[0];
+        ss << value[0];
         for(int i=1; i<size; i++)
-            ss<<" "<<value[i];
+            ss <<" "<<value[i];
         return ss.str();
     }
 
@@ -346,6 +346,11 @@ public:
     //}
 };
 
+template <>
+std::string ParamProxyBasic<double>::getAsString() const;
+
+template <>
+std::string ParamProxyBasic<bool>::getAsString() const;
 
 /** 
  * Template class for parameters of class types, i.e. user defined classes.

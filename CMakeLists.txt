@@ -20,7 +20,8 @@ ycm_default_dirs(${VARS_PREFIX})
 find_package(YARP REQUIRED)
 
 
-SET(folder_source src/paramHelperBase.cpp
+SET(folder_source src/paramProxyBasic.cpp
+                  src/paramHelperBase.cpp
                   src/paramHelperClient.cpp
                   src/paramHelperServer.cpp
                   src/paramHelpUtil.cpp)
