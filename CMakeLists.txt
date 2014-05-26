@@ -13,6 +13,7 @@ set(${VARS_PREFIX}_PATCH_VERSION 1)
 set(${VARS_PREFIX}_VERSION ${${VARS_PREFIX}_MAJOR_VERSION}.${${VARS_PREFIX}_MINOR_VERSION}.${${VARS_PREFIX}_PATCH_VERSION})
 
 find_package(YCM REQUIRED)
+
 include(YCMDefaultDirs)
 ycm_default_dirs(${VARS_PREFIX})
 
@@ -50,6 +51,7 @@ endif()
 set(LIB_TARGET_NAME paramhelp)
 
 add_library(${LIB_TARGET_NAME} ${LIB_TYPE} ${folder_source} ${folder_header})
+add_executable(uTest src/test/uTest.cpp)
 
 set_target_properties(${LIB_TARGET_NAME} PROPERTIES VERSION ${${VARS_PREFIX}_VERSION}
                                            SOVERSION ${${VARS_PREFIX}_VERSION}
@@ -59,7 +61,7 @@ target_include_directories(${LIB_TARGET_NAME} PUBLIC "$<BUILD_INTERFACE:${CMAKE_
                                            "$<INSTALL_INTERFACE:${CMAKE_INSTALL_PREFIX}/${${VARS_PREFIX}_INSTALL_INCLUDEDIR}>"
                                             ${YARP_INCLUDE_DIRS})
                                             
-target_link_libraries(${LIB_TARGET_NAME} ${YARP_LIBRARIES})
+target_link_libraries(uTest ${LIB_TARGET_NAME} ${YARP_LIBRARIES})
 
 install(TARGETS paramhelp
         EXPORT paramHelp
