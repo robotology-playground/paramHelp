@@ -20,6 +20,8 @@ ycm_default_dirs(${VARS_PREFIX})
 
 find_package(YARP REQUIRED)
 
+option(COMPILE_AS_SHARED_LIBRARY "Compile ${PROJECT_NAME} as a shared library" TRUE)
+
 
 SET(folder_source src/paramProxyBasic.cpp
                   src/paramHelperBase.cpp
@@ -39,10 +41,10 @@ SOURCE_GROUP("Header Files" FILES ${folder_header})
 
 if(MSVC)
     message(STATUS "Building ${PROJECTNAME} as a shared library is not currently supported on Windows")
-    set(SHARED_LIBRARY FALSE)
+    set(COMPILE_AS_SHARED_LIBRARY FALSE)
 endif()
 
-if(SHARED_LIBRARY)
+if(COMPILE_AS_SHARED_LIBRARY)
     set(LIB_TYPE SHARED)
 else()
     set(LIB_TYPE STATIC)
