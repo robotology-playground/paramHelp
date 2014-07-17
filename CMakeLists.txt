@@ -62,7 +62,8 @@ set_target_properties(${LIB_TARGET_NAME} PROPERTIES VERSION ${${VARS_PREFIX}_VER
 target_include_directories(${LIB_TARGET_NAME} PUBLIC "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>"
                                            "$<INSTALL_INTERFACE:${CMAKE_INSTALL_PREFIX}/${${VARS_PREFIX}_INSTALL_INCLUDEDIR}>"
                                             ${YARP_INCLUDE_DIRS})
-                                            
+
+target_link_libraries(${LIB_TARGET_NAME} ${YARP_LIBRARIES})
 target_link_libraries(uTest ${LIB_TARGET_NAME} ${YARP_LIBRARIES})
 
 install(TARGETS paramhelp
