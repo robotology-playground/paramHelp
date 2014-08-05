@@ -346,10 +346,10 @@ public:
     //}
 };
 
-template <>
+//template <>
 std::string ParamProxyBasic<double>::getAsString() const;
 
-template <>
+//template <>
 std::string ParamProxyBasic<bool>::getAsString() const;
 
 /** 

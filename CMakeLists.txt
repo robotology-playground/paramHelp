@@ -53,7 +53,10 @@ endif()
 set(LIB_TARGET_NAME paramhelp)
 
 add_library(${LIB_TARGET_NAME} ${LIB_TYPE} ${folder_source} ${folder_header})
+
+if(NOT MSVC)
 add_executable(uTest src/test/uTest.cpp)
+endif()
 
 set_target_properties(${LIB_TARGET_NAME} PROPERTIES VERSION ${${VARS_PREFIX}_VERSION}
                                            SOVERSION ${${VARS_PREFIX}_VERSION}
@@ -64,7 +67,10 @@ target_include_directories(${LIB_TARGET_NAME} PUBLIC "$<BUILD_INTERFACE:${CMAKE_
                                             ${YARP_INCLUDE_DIRS})
 
 target_link_libraries(${LIB_TARGET_NAME} ${YARP_LIBRARIES})
+
+if(NOT MSVC)
 target_link_libraries(uTest ${LIB_TARGET_NAME} ${YARP_LIBRARIES})
+endif()
 
 install(TARGETS paramhelp
         EXPORT paramHelp
