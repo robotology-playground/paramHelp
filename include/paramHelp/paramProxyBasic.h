@@ -346,10 +346,14 @@ public:
     //}
 };
 
-//template <>
+#ifndef _MSC_VER
+template <>
+#endif
 std::string ParamProxyBasic<double>::getAsString() const;
 
-//template <>
+#ifndef _MSC_VER
+template <>
+#endif
 std::string ParamProxyBasic<bool>::getAsString() const;
 
 /** 
