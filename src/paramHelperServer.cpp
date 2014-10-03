@@ -42,7 +42,7 @@ ParamHelperServer::~ParamHelperServer()
 }
 
 //*************************************************************************************************************************
-void ParamHelperServer::initializeParams(ResourceFinder &rf, Bottle &reply)
+bool ParamHelperServer::initializeParams(ResourceFinder &rf, Bottle &reply)
 {
     Bottle temp;
     for(map<int,ParamProxyInterface*>::iterator it=paramList.begin(); it!=paramList.end(); it++)
@@ -76,7 +76,15 @@ void ParamHelperServer::initializeParams(ResourceFinder &rf, Bottle &reply)
 
             setParam(it->second->id, temp, reply, true);
         }
+        else 
+        {
+            // can't find current param in rf
+            reply.addString(("Parameter " + paramName + " not found in the current resource finder" ).c_str());
+            return false;
+        }
     }
+    // all the params are initialized
+    return true;
 }
 
 //*************************************************************************************************************************
@@ -108,7 +116,7 @@ bool ParamHelperServer::processRpcCommand(const Bottle& cmd, Bottle& reply)
     Bottle v;
     if(!identifyCommand(cmd, cmdType, id, v))    // identify the command and, put anything after it in v
         return false;
-    
+
     switch(cmdType)
     {
     case COMMAND_SET:       setParam(id, v, reply);     break;
