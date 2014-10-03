@@ -122,8 +122,9 @@ public:
 
     /** Initialize the module parameters reading the value from the specified resource finder.
       * @param rf Resource finder used to read the parameter values from configuration file or command line
-      * @param reply Output message containing information about the initialization (e.g. what went wrong) */
-    void initializeParams(yarp::os::ResourceFinder &rf, yarp::os::Bottle &reply);
+      * @param reply Output message containing information about the initialization (e.g. what went wrong)
+      * @return True if the initialization of all the params succeeded, false otherwise.*/
+    bool initializeParams(yarp::os::ResourceFinder &rf, yarp::os::Bottle &reply);
 
     /** Open 4 ports (at the moment only 3 ports because the rpc is assumed to be already opened) :
       * - "/moduleName/rpc": Rpc Port for synchronous set/get operations on module parameters
