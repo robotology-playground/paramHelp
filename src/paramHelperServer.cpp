@@ -76,14 +76,14 @@ bool ParamHelperServer::initializeParams(ResourceFinder &rf, Bottle &reply)
 
             setParam(it->second->id, temp, reply, true);
         }
-        else 
+        else if(it->second->ioType.mustBeInitialized())
         {
             // can't find current param in rf
             reply.addString(("Parameter " + paramName + " not found in the current resource finder" ).c_str());
             return false;
         }
     }
-    // all the params are initialized
+    // all the mandatory params are initialized
     return true;
 }
 

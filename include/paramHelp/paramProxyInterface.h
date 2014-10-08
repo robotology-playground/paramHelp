@@ -66,6 +66,8 @@ public:
     ParamIOTypeEnum value;
     ParamIOType(ParamIOTypeEnum _value=PARAM_IO_UNKNOWN): value(_value) {}
 
+    inline bool mustBeInitialized() const
+    { return value == PARAM_IO_UNKNOWN || value == PARAM_CONFIG || value == PARAM_INPUT || value == PARAM_IN_OUT || value == PARAM_IN_STREAM || value == PARAM_IN_OUT_STREAM; }
     inline bool canRead() const
     { return value==PARAM_OUTPUT || value==PARAM_OUT_STREAM || value==PARAM_IN_OUT || value==PARAM_IN_OUT_STREAM || PARAM_IN_STREAM; }
     inline bool canWrite() const
