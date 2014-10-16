@@ -82,7 +82,7 @@ bool ParamHelperServer::initializeParams(ResourceFinder &rf, Bottle &reply)
         {
             // can't find current param in rf
             paramsNotFound = true;
-            paramsNotFoundList.append(" ")
+            paramsNotFoundList.append(" ");
             paramsNotFoundList.append(paramName);
         }
     }
