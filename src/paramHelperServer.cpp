@@ -45,6 +45,8 @@ ParamHelperServer::~ParamHelperServer()
 bool ParamHelperServer::initializeParams(ResourceFinder &rf, Bottle &reply)
 {
     Bottle temp;
+    std::string paramsNotFoundList = "";
+    bool paramsNotFound = false;
     for(map<int,ParamProxyInterface*>::iterator it=paramList.begin(); it!=paramList.end(); it++)
     {
         string paramName = it->second->name;
@@ -79,12 +81,24 @@ bool ParamHelperServer::initializeParams(ResourceFinder &rf, Bottle &reply)
         else if(it->second->ioType.mustBeInitialized())
         {
             // can't find current param in rf
-            reply.addString(("Parameter " + paramName + " not found in the current resource finder" ).c_str());
-            return false;
+            paramsNotFound = true;
+            paramsNotFoundList.append(" ")
+            paramsNotFoundList.append(paramName);
         }
     }
-    // all the mandatory params are initialized
-    return true;
+    
+    if( !paramsNotFound )
+    {
+    	// all the mandatory params are initialized
+    	return true;
+    } 
+    else
+    {
+    	
+    	reply.addString(("Parameters " + paramsNotFoundList + " not found in the current resource finder" ).c_str());
+    	return false;
+    }
+
 }
 
 //*************************************************************************************************************************
