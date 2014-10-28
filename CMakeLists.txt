@@ -21,6 +21,7 @@ ycm_default_dirs(${VARS_PREFIX})
 find_package(YARP REQUIRED)
 
 option(COMPILE_AS_SHARED_LIBRARY "Compile ${PROJECT_NAME} as a shared library" TRUE)
+option(ENABLE TESTS "Enable test for paramHelp" FALSE)
 
 
 SET(folder_source src/paramProxyBasic.cpp
@@ -54,7 +55,7 @@ set(LIB_TARGET_NAME paramhelp)
 
 add_library(${LIB_TARGET_NAME} ${LIB_TYPE} ${folder_source} ${folder_header})
 
-if(NOT MSVC)
+if(NOT MSVC AND ENABLE_TESTS)
 add_executable(uTest src/test/uTest.cpp)
 endif()
 
@@ -68,7 +69,7 @@ target_include_directories(${LIB_TARGET_NAME} PUBLIC "$<BUILD_INTERFACE:${CMAKE_
 
 target_link_libraries(${LIB_TARGET_NAME} ${YARP_LIBRARIES})
 
-if(NOT MSVC)
+if(NOT MSVC AND ENABLE_TESTS)
 target_link_libraries(uTest ${LIB_TARGET_NAME} ${YARP_LIBRARIES})
 endif()
 
