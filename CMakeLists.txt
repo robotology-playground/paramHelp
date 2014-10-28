@@ -21,7 +21,7 @@ ycm_default_dirs(${VARS_PREFIX})
 find_package(YARP REQUIRED)
 
 option(COMPILE_AS_SHARED_LIBRARY "Compile ${PROJECT_NAME} as a shared library" TRUE)
-option(ENABLE TESTS "Enable test for paramHelp" FALSE)
+option(ENABLE_TESTS "Enable test for paramHelp" FALSE)
 
 
 SET(folder_source src/paramProxyBasic.cpp
