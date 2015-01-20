@@ -50,12 +50,21 @@ else()
     set(LIB_TYPE STATIC)
 endif()
 
+option(PARAMHELP_ENABLE_RPATH "Enable support to RPATH for paramHelp library" TRUE)
+mark_as_advanced(PARAMHELP_ENABLE_RPATH)
+
+include(AddInstallRPATHSupport)
+add_install_rpath_support(BIN_DIRS "${CMAKE_INSTALL_PREFIX}/bin"
+                          LIB_DIRS "${CMAKE_INSTALL_PREFIX}/lib"
+                          DEPENDS PARAMHELP_ENABLE_RPATH
+                          USE_LINK_PATH)
+
 set(LIB_TARGET_NAME paramhelp)
 
 add_library(${LIB_TARGET_NAME} ${LIB_TYPE} ${folder_source} ${folder_header})
 
 if(NOT MSVC)
-add_executable(uTest src/test/uTest.cpp)
+# add_executable(uTest src/test/uTest.cpp)
 endif()
 
 set_target_properties(${LIB_TARGET_NAME} PROPERTIES VERSION ${${VARS_PREFIX}_VERSION}
@@ -69,7 +78,7 @@ target_include_directories(${LIB_TARGET_NAME} PUBLIC "$<BUILD_INTERFACE:${CMAKE_
 target_link_libraries(${LIB_TARGET_NAME} ${YARP_LIBRARIES})
 
 if(NOT MSVC)
-target_link_libraries(uTest ${LIB_TARGET_NAME} ${YARP_LIBRARIES})
+# target_link_libraries(uTest ${LIB_TARGET_NAME} ${YARP_LIBRARIES})
 endif()
 
 install(TARGETS paramhelp
