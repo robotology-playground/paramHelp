@@ -20,6 +20,7 @@
 #define __PARAMPROXYBASIC_H__
 
 #include <yarp/sig/Vector.h>
+#include <yarp/os/Log.h>
 #include <yarp/os/Semaphore.h>
 #include <yarp/os/BufferedPort.h>
 #include <string>
@@ -233,8 +234,8 @@ public:
         const yarp::os::Bottle *newValue;
         if(nv.get(0).isList())
         {
-            //printf("Parameter %s, 1st element of this Bottle should be a Bottle: %s\n", name.c_str(), nv.toString().c_str());
             newValue = nv.get(0).asList();
+            yWarning("Parameter %s, 1st element of this Bottle should be a Bottle: %s\n", name.c_str(), nv.toString().c_str());
         }
         else
             newValue = &nv;
@@ -259,6 +260,7 @@ public:
             delete[] value;                 ///< deallocate old memory
             size.size = newValue->size();   ///< update variable size
             value = new T[size];            ///< allocate new memory
+            yWarning("The parameter %s is not linked to any external variable and size changed. So we resize the variable", getAsString().c_str());
         }
 
         ///< set the new value

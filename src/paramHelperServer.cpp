@@ -57,12 +57,12 @@ bool ParamHelperServer::initializeParams(ResourceFinder &rf, Bottle &reply)
             ///< check whether this is the parameter value of a list of section names, which contain the parameter values
             if(paramList[it->second->id]->checkConstraints(b.tail()))
             {
-                //printf("Param %s is simple\n", it->second->name.c_str());
+                logMsg(strapp("Param %s is simple\n", it->second->name.c_str()), MSG_INFO);
                 temp = b.tail();
             }
             else
             {
-                //printf("Param %s is structured\n", it->second->name.c_str());
+                logMsg(strapp("Param %s is structured\n", it->second->name.c_str()), MSG_INFO);
                 temp.clear();
                 for(int i=1; i<b.size(); i++)
                 {
@@ -70,7 +70,7 @@ bool ParamHelperServer::initializeParams(ResourceFinder &rf, Bottle &reply)
                     Bottle &sb = rf.findGroup(key);     ///< find all sections related to this parameter
                     if(!sb.isNull())
                     {
-                        //printf("Looking for subparameter %s I found this Bottle: %s\n", key.c_str(), sb.toString().c_str());
+                        logMsg(strapp("Looking for subparameter %s I found this Bottle: %s\n", key.c_str(), sb.toString().c_str()), MSG_INFO);
                         temp.addList() = sb.tail();
                     }
                 }
