@@ -16,6 +16,7 @@
 #include <string>
 #include <fstream>
 #include <time.h>
+#include <typeinfo>
 #include <iostream>
 #include <stdio.h>
 #include <iomanip>
