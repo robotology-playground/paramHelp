@@ -10,6 +10,7 @@
 #include <paramHelp/paramHelperBase.h>
 
 #include <yarp/os/Vocab.h>
+#include <yarp/os/Log.h>
 
 #include <limits.h>
 #include <string>
@@ -198,6 +199,19 @@ bool ParamHelperBase::writeParamsOnFile(string filename, int *paramIds, int para
 //*************************************************************************************************************************
 void ParamHelperBase::logMsg(const string &s, MsgType type) const
 {
-    if(type>=MSG_DEBUG)
-        printf("[ParamHelper] %s\n", s.c_str());
+    switch (type) {
+        case MSG_DEBUG:
+            yDebug("[%s] %s\n", typeid(this).name(), s.c_str());
+            break;
+        case MSG_WARNING:
+            yWarning("[%s] %s\n", typeid(this).name(), s.c_str());
+            break;
+        case MSG_ERROR:
+            yError("[%s] %s\n", typeid(this).name(), s.c_str());
+            break;
+        case MSG_INFO:
+        default:
+            yInfo("[%s] %s\n", typeid(this).name(), s.c_str());
+            break;
+    }
 }

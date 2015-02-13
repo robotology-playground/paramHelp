@@ -20,6 +20,7 @@
 #define __PARAMHELPUTIL_H__
 
 #include <yarp/sig/Vector.h>
+#include <yarp/os/Log.h>
 #include <yarp/os/Semaphore.h>
 #include <yarp/os/BufferedPort.h>
 #include <string>
@@ -110,7 +111,7 @@ template <>        inline std::string castFromValue<std::string>(const yarp::os:
 inline void printBottle(const yarp::os::Bottle &b)
 {
     for(int i=0; i<b.size(); i++)
-        printf("%s\n", b.get(i).asString().c_str());
+        yInfo("%s\n", b.get(i).asString().c_str());
 }
 
 }//end namespace paramHelp
