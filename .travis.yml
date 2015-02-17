@@ -4,18 +4,26 @@ compiler:
   - gcc
   - clang
 
+env:
+# set the CMAKE_PREFIX_PATH enviroment variable to get software installed by the superbuild
+  - TRAVIS_BUILD_TYPE=Debug, TRAVIS_CMAKE_GENERATOR="Unix Makefiles", CMAKE_PREFIX_PATH="/home/travis/build/robotology-playground/codyco-superbuild/build/install"
+  - TRAVIS_BUILD_TYPE=Release, TRAVIS_CMAKE_GENERATOR="Unix Makefiles", CMAKE_PREFIX_PATH="/home/travis/build/robotology-playground/codyco-superbuild/build/install"
+
+matrix:
+  allow_failures:
+    - compiler: clang
+
 install:
-  - sudo sh -c 'echo "deb http://www.icub.org/ubuntu precise contrib/science" > /etc/apt/sources.list.d/icub.list'
-  - sudo add-apt-repository -y ppa:kalakris/cmake
-  - sudo apt-get update
-  - sudo apt-get install cmake
+  # install dependencies using the codyco-superbuild script
+  - cd ..
+  - git clone https://github.com/robotology/codyco-superbuild
+  - cd codyco-superbuild
+  - chmod +x ./.ci/travis-deps.sh
+  - sh .ci/travis-deps.sh
 
 before_script:
   - cmake --version
-  - cd ..
   # use superbuild for getting paramHelp dependencies 
-  - git clone https://github.com/robotology/codyco-superbuild
-  - cd codyco-superbuild
   - mkdir build
   - cd build
   # using the YCM_EP_MAINTAINER_MODE variable to enable the subproject-dependees target 
@@ -23,16 +31,11 @@ before_script:
   - make paramHelp-dependees
   - pwd
   - cd ../..
-  # deal with TinyXML linking problems
-  - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/travis/build/robotology-playground/codyco-superbuild/build/install/lib
-  - ls /home/travis/build/robotology-playground/codyco-superbuild/build/install/lib
-  - echo $LD_LIBRARY_PATH
-  - sudo ldconfig
   # Prepare paramHelp build
   - cd paramHelp
   - mkdir build
   - cd build
-  - cmake -DCMAKE_BUILD_TYPE=${PARAMHELP_TRAVIS_BUILD_TYPE} -DPARAMHELP_BUILD_TESTS:BOOL=ON  -DSTANDARD_FIND_MODULE_DEBUG:BOOL=ON ..
+  - cmake -DCMAKE_BUILD_TYPE=-DPARAMHELP_BUILD_TESTS:BOOL=ON  -DSTANDARD_FIND_MODULE_DEBUG:BOOL=ON ..
 
 script:
   - make
